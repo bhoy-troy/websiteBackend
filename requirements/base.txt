@@ -1,0 +1,46 @@
+django-storages[boto3]==1.11.1  # https://github.com/jschneier/django-storages
+
+celery==5.0.5
+kombu==5.0.2
+
+channels==3.0.3
+channels-redis==3.2.0
+
+daphne==3.0.1
+
+graphene-django==2.15.0
+django-graphql-jwt==0.3.1
+
+Django==3.1.7
+django-filter==2.4.0
+djangorestframework==3.12.2
+djangorestframework_simplejwt==4.4.0
+django-rest-swagger==2.2.0
+gevent==21.1.2
+
+# Python Social Auth
+
+social-auth-app-django==4.0.0
+social-auth-core==4.0.3
+
+# Django page caching is not working with this version of Redis
+# but this version is required by Celery
+django-redis==4.12.1
+
+
+dj_database_url==0.5.0
+gunicorn==20.0.4
+
+psycopg2-binary==2.8.6
+
+redis==3.5.3
+
+requests==2.25.1
+google-api-python-client==1.12.8
+
+reportlab==3.5.59
+whitenoise==5.2.0  # https://github.com/evansd/whitenoise
+django-allauth==0.44.0  # https://github.com/pennersr/django-allauth
+
+django-grappelli==2.14.3
+django-compressor==2.4  # https://github.com/django-compressor/django-compressor

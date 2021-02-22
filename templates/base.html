@@ -1,0 +1,57 @@
+{% load static i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="James Troy">
+
+{# <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">#}
+    <title>{% block title %}James Troy{% endblock title %}</title>
+    <!-- CSS only -->
+{#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"#}
+{#          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">#}
+{##}
+{#    <!-- JavaScript Bundle with Popper -->#}
+{#    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"#}
+{#            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"#}
+{#            crossorigin="anonymous">#}
+{##}
+{#    </script>#}
+{#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"#}
+{#          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">#}
+{#    <meta name="theme-color" content="#7952b3">#}
+
+ <link href="{% static 'css/normalize.min.css' %} rel='stylesheet' ">
+<link href="{% static 'css/normalize.min.css' %} rel='stylesheet' ">
+        <link href="{% static 'vendors/css/splitting.css' %}" rel="stylesheet"/>
+        <link href="{% static 'vendors/css/fontAwesome.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/project.min.css' %}" rel="stylesheet">
+ <link rel="stylesheet" href="{% static 'css/project.css' %}">
+</head>
+
+<style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+    @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+        }
+    }
+</style>
+<body>
+{% block content %}
+{% endblock content %}
+</body>
+{%  include '_scripts.html' %}
+</html>

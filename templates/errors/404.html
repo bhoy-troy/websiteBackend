@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static i18n compress %}
+{% block title %}{% trans "404 Error" %}{% endblock %}
+{% block content %}
+    <div class="container papers">
+        <div class="error-wrapper">
+            <div>Error</div>
+            <div>404</div>
+            <hr>
+            <div>Page Not Found</div>
+        </div>
+    </div>
+{% endblock %}

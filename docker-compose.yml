@@ -1,0 +1,125 @@
+version: "3.7"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:11.5
+    networks:
+      - main
+    ports:
+      - "5434:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD :- postgres}
+      - POSTGRES_USER=${POSTGRES_USERNAME:- postgres}
+      - POSTGRES_DB=${POSTGRES_NAME:- website}
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis-data:/data
+    container_name: redis
+    networks:
+      - main
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      - REDIS_HOST=redis
+    ports:
+      - "8085:8081"
+    depends_on:
+      - "redis"
+    networks:
+      - main
+
+
+
+  backend: &backend
+    container_name: backend
+    build:
+      context: .
+      dockerfile: scripts/dev/Dockerfile
+    command:
+      - "watchmedo"
+      - "auto-restart"
+      - "--directory=./"
+      - "--pattern=*.py"
+      - "--recursive"
+      - "--"
+      - "python3"
+      - "manage.py"
+      - "runserver_plus"
+      - "0.0.0.0:8000"
+    volumes:
+      - ./backend:/code
+      - django-static:/code/static
+    ports:
+      - "8000:8000"
+      - "8888:8888"
+    networks:
+      - main
+    environment:
+      - CI_PIPELINE_TRIGGERED=True
+      - SECRET_KEY=secret-key-for-development
+      - DEBUG=True
+      - DJANGO_EMAIL_HOST=${DJANGO_EMAIL_HOST}
+      - DJANGO_EMAIL_PORT=${DJANGO_EMAIL_PORT}
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_USERNAME=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_SERVICE_HOST=${POSTGRES_SERVICE_HOST}
+      - POSTGRES_SERVICE_PORT=${POSTGRES_SERVICE_PORT}
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+      - DJANGO_SETTINGS_MODULE=backend.settings.development
+      - GITHUB_KEY=${GITHUB_KEY}
+      - GITHUB_SECRET=${GITHUB_SECRET}
+      - GOOGLE_OAUTH2_KEY=${GOOGLE_OAUTH2_KEY}
+      - GOOGLE_OAUTH2_SECRET=${GOOGLE_OAUTH2_SECRET}
+      - FACEBOOK_KEY=${FACEBOOK_KEY}
+      - FACEBOOK_SECRET=${FACEBOOK_SECRET}
+      - REDIS_SERVICE_HOST=redis
+    depends_on:
+      - postgres
+      - redis
+
+
+
+  mailhog:
+    container_name: mailhog
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - main
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - "5050:80"
+    depends_on:
+      - "postgres"
+    networks:
+      - main
+
+volumes:
+  pg-data:
+  django-static:
+  redis-data:
+  pgadmin:
+
+networks:
+  main:
+    driver: bridge

@@ -1,0 +1,74 @@
+{
+  "name": "websiteBackend",
+  "version": "0.1.0",
+  "dependencies": {
+    "splitting": "1.0.6"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "5.12.0",
+    "autoprefixer": "9.7.3",
+    "bootstrap": "4.3.1",
+    "browser-sync": "2.26.12",
+    "clean-css": "4.2.3",
+    "cssnano": "4.1.10",
+    "gulp": "4.0.2",
+    "gulp-clean-css": "4.2.0",
+    "gulp-concat": "2.6.1",
+    "gulp-imagemin": "7.1.0",
+    "gulp-minify-css": "1.2.4",
+    "gulp-plumber": "1.2.1",
+    "gulp-postcss": "8.0.0",
+    "gulp-rename": "2.0.0",
+    "gulp-sass": "4.0.2",
+    "gulp-uglify-es": "1.0.4",
+    "html5shiv": "3.7.3",
+    "jquery": "3.5.1",
+    "minimist": "0.2.1",
+    "pixrem": "5.0.0",
+    "popper.js": "1.16.0",
+    "postinstall": "0.7.0",
+    "vendor-copy": "2.0.0"
+  },
+  "engines": {
+    "node": "14.15.1"
+  },
+  "browserslist": [
+    "last 3 versions"
+  ],
+  "scripts": {
+    "dev": "gulp",
+    "build": "gulp generate-assets",
+    "reinstall": "rimraf node_modules && npm cache clean && npm install",
+    "postinstall": "vendor-copy"
+  },
+  "vendorCopy": [
+    {
+      "from": "node_modules/jquery/dist/jquery.min.js",
+      "to": "websiteBackend/static/vendors/js/jquery.min.js"
+    },
+    {
+      "from": "node_modules/popper.js/dist/popper.min.js",
+      "to": "websiteBackend/static/vendors/js/popper.min.js"
+    },
+    {
+      "from": "node_modules/html5shiv/dist/html5shiv.min.js",
+      "to": "websiteBackend/static/vendors/js/html5shiv.min.js"
+    },
+    {
+      "from": "node_modules/bootstrap/dist/js/bootstrap.min.js",
+      "to": "websiteBackend/static/vendors/js/bootstrap.min.js"
+    },
+    {
+      "from": "node_modules/splitting/dist/splitting.css",
+      "to": "websiteBackend/static/vendors/css/splitting.css"
+    },
+    {
+      "from": "node_modules/splitting/dist/splitting.min.js",
+      "to": "websiteBackend/static/vendors/js/splitting.min.js"
+    },
+    {
+      "from": "node_modules/splitting/dist/splitting.min.js",
+      "to": "websiteBackend/static/vendors/js/splitting.min.js"
+    }
+  ]
+}
