@@ -13,7 +13,7 @@ const browserSync = require('browser-sync').create();
 const concat = require('gulp-concat');
 
 const cssnano = require('cssnano');
-const imagemin = require('gulp-imagemin');
+// const imagemin = require('gulp-imagemin');
 const pixrem = require('pixrem');
 const plumber = require('gulp-plumber');
 const postcss = require('gulp-postcss');
@@ -26,15 +26,12 @@ const cleanCSS = require('gulp-clean-css');
 
 // Relative paths function
 function pathsConfig(appName) {
-  this.app = `./${pjson.name}`;
+  this.app = `./${pjson.appRoot}`;
   const vendorsRoot = 'node_modules';
 
   return {
 
     bootstrapSassSrc: `${vendorsRoot}/bootstrap/scss/**`,
-    // fontAwesomeSass: [`${vendorsRoot}/@fortawesome/fontawesome-free/scss/fontawesome.scss`],
-    // fontAwesomeJs: [`${vendorsRoot}/@fortawesome/fontawesome-free/js/all.js`],
-
     fontAwesome: {
       css: [`${vendorsRoot}/@fortawesome/fontawesome-free/css/all.css`],
       js: [`${vendorsRoot}/@fortawesome/fontawesome-free/js/all.js`],
@@ -42,8 +39,6 @@ function pathsConfig(appName) {
       svgs: [`${vendorsRoot}/@fortawesome/fontawesome-free/svgs/**`],
       sprites: [`${vendorsRoot}/@fortawesome/fontawesome-free/sprites/**`]
     },
-
-
 
 
     vendorsJs: [
@@ -149,27 +144,6 @@ function fontAwesomeScripts() {
       .pipe(dest(paths.vendors.js))
 }
 
-// function splittingScript() {
-//   return src(paths.splitting.js, {allowEmpty: true})
-//       .pipe(concat('splitting.js'))
-//       .pipe(dest(paths.vendors.js))
-//       .pipe(plumber()) // Checks for errors
-//       .pipe(uglify()) // Minifies the js
-//       .pipe(rename({ suffix: '.min' }))
-//       .pipe(dest(paths.vendors.js))
-// }
-//
-// function splittingStyle() {
-//
-//   return src(paths.splitting.css, {allowEmpty: true})
-//       .pipe(concat('splitting.css'))
-//       .pipe(dest(paths.vendors.css))
-//       .pipe(plumber()) // Checks for errors
-//       .pipe(cleanCSS())// Minifies the CSS
-//       .pipe(rename({ suffix: '.min' }))
-//       .pipe(dest(paths.vendors.css))
-// }
-
 function fontAwesomeSprites() {
   return src(paths.fontAwesome.sprites, {allowEmpty: true})
       .pipe(dest(paths.vendors.sprites));
@@ -185,21 +159,6 @@ function fontAwesomeWebfonts() {
   return src(paths.fontAwesome.webfonts, {allowEmpty: true})
       .pipe( dest(paths.vendors.webfonts) );
 
-}
-
-
-// Image compression
-function imgCompression() {
-  return src(`${paths.images}/*`)
-      .pipe(imagemin(
-          [
-
-        imagemin.mozjpeg({quality: 75, progressive: true}),
-        imagemin.optipng({optimizationLevel: 5}),
-
-      ]
-      )) // Compresses PNG, JPEG, GIF and SVG images
-      .pipe(dest(`${paths.images}`))
 }
 
 // Run django server
@@ -246,7 +205,6 @@ function watchPaths() {
 // Generate all assets
 const generateAssets = parallel(
     styles,
-    bootstrapSass,
     scripts,
     vendorScripts,
     fontAwesomeStyles,
@@ -254,7 +212,9 @@ const generateAssets = parallel(
     fontAwesomeWebfonts,
     fontAwesomeSvgs,
     fontAwesomeSprites,
-    imgCompression,
+    bootstrapSass,
+    // imgCompression,
+
 );
 
 // Set up dev environment
@@ -266,5 +226,3 @@ const dev = parallel(
 exports.default = series(generateAssets, dev);
 exports["generate-assets"] = generateAssets;
 exports["dev"] = dev;
-
-

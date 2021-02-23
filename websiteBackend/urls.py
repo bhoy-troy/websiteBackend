@@ -17,7 +17,8 @@ from django.conf import settings
 from django.conf.urls import url
 
 from django.contrib import admin
-from django.urls import path, include
+from django.http import HttpResponse
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.views import defaults as default_views
 from django.views.i18n import JavaScriptCatalog
@@ -41,6 +42,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     url(r"^api/", include((api_urlpatterns, "api"), namespace="api")),
+    re_path(r"healthcheck/?$", lambda r: HttpResponse(), name="healthcheck")
     # path(
     #     "favicon.ico",
     #     RedirectView.as_view(url=settings.STATIC_URL + "images/favicons/favicon.ico"),
@@ -72,8 +74,4 @@ if settings.DEBUG:
     if "debug_toolbar" in settings.INSTALLED_APPS:
         import debug_toolbar
 
-        urlpatterns = [
-            path(
-                "__debug__/",
-                include(
-                    debug_toolbar.urls))] + urlpatterns
+        urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
