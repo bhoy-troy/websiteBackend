@@ -1,8 +1,11 @@
+FROM node:14.15-buster-slim as nodebuilder
+
+
 # first stage
 LABEL version="0.0.1-django-backend"
 MAINTAINER "James Troy <james@james-troy.com>"
 
-FROM node:14.15-buster-slim as nodebuilder
+
 
 # set working directory
 WORKDIR /node_build
