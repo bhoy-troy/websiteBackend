@@ -63,6 +63,11 @@
       "to": "websiteBackend/static/vendors/js/bootstrap.min.js"
     },
     {
+      "from": "node_modules/bootstrap/scss",
+      "to": "websiteBackend/static/sass/bootstrap"
+    },
+
+    {
       "from": "node_modules/splitting/dist/splitting.css",
       "to": "websiteBackend/static/vendors/css/splitting.css"
     },

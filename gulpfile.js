@@ -212,7 +212,7 @@ const generateAssets = parallel(
     fontAwesomeWebfonts,
     fontAwesomeSvgs,
     fontAwesomeSprites,
-    bootstrapSass,
+    // bootstrapSass,
     // imgCompression,
 
 );
