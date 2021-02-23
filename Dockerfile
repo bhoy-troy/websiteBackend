@@ -1,8 +1,8 @@
 # first stage
 FROM python:3.8 AS pybuilder
 
-COPY requirements/base.txt requirements/dev.txt ./
-RUN pip install --user -r requirements/dev.txt --no-cache-dir
+COPY requirements/base.txt requirements_base.txt
+RUN pip install --user -r requirements_base.txt --no-cache-dir
 
 
 
@@ -40,4 +40,5 @@ ENV PATH="/home/app/.local/bin:${PATH}"
 
 
 USER app_user
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+
+CMD gunicorn websiteBackend.wsgi:application --bind 0.0.0.0:$PORT
